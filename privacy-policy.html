@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Lock In Twin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #00ff88;
+      --green-dim: rgba(0,255,136,0.08);
+      --green-border: rgba(0,255,136,0.2);
+      --bg: #080808;
+      --surface: #0e0e0e;
+      --surface2: #141414;
+      --text: #c8c8c8;
+      --text-dim: #555;
+      --text-bright: #efefef;
+      --red: #ff3355;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow orb */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 72px;
+      border-bottom: 1px solid var(--green-border);
+      padding-bottom: 48px;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      animation: breathe 3s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { box-shadow: 0 0 8px rgba(0,255,136,0.3); }
+      50%       { box-shadow: 0 0 20px rgba(0,255,136,0.6); }
+    }
+
+    .logo-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    h1 span { color: var(--green); }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    .updated {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      background: var(--surface2);
+      border: 1px solid #1e1e1e;
+      padding: 4px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+    }
+
+    /* TL;DR box */
+    .tldr {
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-left: 3px solid var(--green);
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin-bottom: 64px;
+    }
+
+    .tldr-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tldr p {
+      font-size: 15px;
+      color: var(--text-bright);
+      font-weight: 400;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 52px;
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    p {
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* Permission cards */
+    .perm-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .perm-card {
+      background: var(--surface);
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0 16px;
+      align-items: start;
+      transition: border-color 0.2s;
+    }
+
+    .perm-card:hover { border-color: var(--green-border); }
+
+    .perm-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .perm-body { }
+
+    .perm-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .perm-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .perm-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      align-self: start;
+    }
+
+    .badge-local {
+      background: rgba(0,255,136,0.1);
+      color: var(--green);
+      border: 1px solid rgba(0,255,136,0.25);
+    }
+
+    .badge-host {
+      background: rgba(255,180,0,0.08);
+      color: #ffb400;
+      border: 1px solid rgba(255,180,0,0.2);
+    }
+
+    /* No-collect list */
+    .no-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .no-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .no-list li::before {
+      content: '✗';
+      font-family: 'Space Mono', monospace;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Contact box */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .contact-box p { margin: 0; font-size: 14px; }
+
+    .contact-email {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: var(--green);
+      text-decoration: none;
+      border: 1px solid var(--green-border);
+      padding: 8px 18px;
+      border-radius: 5px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .contact-email:hover { background: var(--green-dim); }
+
+    /* Footer */
+    footer {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid #141414;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      margin: 0;
+      letter-spacing: 0.08em;
+    }
+
+    footer span { color: var(--green); }
+
+    /* Fade in on load */
+    .wrap { animation: fadein 0.5s ease both; }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo-row">
+      <div class="logo-icon">🔒</div>
+      <div class="logo-name">Lock In Twin</div>
+    </div>
+    <h1>Privacy <span>Policy</span></h1>
+    <p class="subtitle">What we collect, what we don't, and why every permission exists.</p>
+    <span class="updated">Last updated: March 2026</span>
+  </header>
+
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>Lock In Twin does not collect, store, transmit, or sell any personal data. Ever. Your settings stay on your device. Nothing leaves your browser.</p>
+  </div>
+
+  <!-- 1. Overview -->
+  <section>
+    <div class="section-num">01 —</div>
+    <h2>Overview</h2>
+    <p>Lock In Twin ("the Extension") is a Chrome browser extension that detects when you go idle and displays a focus reminder alert. It was built to help you stay on task — not to track you.</p>
+    <p>This policy covers the Extension only. It does not apply to any third-party services or websites you visit while using Chrome.</p>
+  </section>
+
+  <!-- 2. Data collected -->
+  <section>
+    <div class="section-num">02 —</div>
+    <h2>Data We Collect</h2>
+    <p>The Extension stores the following settings <strong style="color:#efefef">locally on your device</strong> using Chrome's built-in sync storage:</p>
+    <div class="perm-grid" style="margin-bottom:18px">
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">alertType</div>
+          <p class="perm-desc">Which alert style you selected: game, overlay, or banner.</p>
+        </div>
+        <span class="perm-badge badge-local">LOCAL ONLY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">idleMinutes</div>
+          <p class="perm-desc">How many minutes of idle time before the alert fires.</p>
+        </div>
+        <span class="perm-badge badge-local">LOCAL ONLY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">enabled</div>
+          <p class="perm-desc">Whether the extension is currently turned on or off.</p>
+        </div>
+        <span class="perm-badge badge-local">LOCAL ONLY</span>
+      </div>
+    </div>
+    <p>That's it. No account. No profile. No analytics. No usage data.</p>
+  </section>
+
+  <!-- 3. Data we do NOT collect -->
+  <section>
+    <div class="section-num">03 —</div>
+    <h2>Data We Do NOT Collect</h2>
+    <ul class="no-list">
+      <li>Browsing history or URLs you visit</li>
+      <li>Page content or text on any website</li>
+      <li>Keystrokes, clicks, or mouse movements</li>
+      <li>Personally identifiable information of any kind</li>
+      <li>IP address or location data</li>
+      <li>Device information or hardware identifiers</li>
+      <li>Screenshots or visual data from your screen</li>
+      <li>Idle duration logs or timestamps</li>
+    </ul>
+  </section>
+
+  <!-- 4. Permissions -->
+  <section>
+    <div class="section-num">04 —</div>
+    <h2>Permissions & Why They're Needed</h2>
+    <p>Every permission the Extension requests has a specific, narrow purpose. Here's exactly what each one does:</p>
+    <div class="perm-grid">
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">idle</div>
+          <p class="perm-desc">Detects when your browser goes idle (no mouse, keyboard, or screen activity). This is the core feature — without it, nothing triggers.</p>
+        </div>
+        <span class="perm-badge badge-local">READ ONLY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">storage</div>
+          <p class="perm-desc">Saves your settings (alert type, idle timer duration, on/off state) locally in your browser. No data is sent to any server.</p>
+        </div>
+        <span class="perm-badge badge-local">LOCAL ONLY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">tabs</div>
+          <p class="perm-desc">Used to identify which tab is currently active when the idle timer fires, so the alert overlay appears in the right place. Tab URLs and content are never read.</p>
+        </div>
+        <span class="perm-badge badge-local">READ ONLY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">scripting</div>
+          <p class="perm-desc">Allows the background service worker to communicate with the content script running on the active tab. Used only to trigger the alert display.</p>
+        </div>
+        <span class="perm-badge badge-local">LOCAL ONLY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">activeTab</div>
+          <p class="perm-desc">Grants temporary access to the tab you're currently on when the idle alert triggers. No persistent or background tab access.</p>
+        </div>
+        <span class="perm-badge badge-local">TEMPORARY</span>
+      </div>
+      <div class="perm-card">
+        <div class="perm-dot"></div>
+        <div class="perm-body">
+          <div class="perm-name">host_permissions: http://* & https://*</div>
+          <p class="perm-desc">Required so the content script that displays the alert overlay can be pre-loaded on any page. Since idle time can expire on any website, the script must be available everywhere. The script only listens for a trigger signal — it does not read, modify, or transmit any page content.</p>
+        </div>
+        <span class="perm-badge badge-host">ALL SITES</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Third parties -->
+  <section>
+    <div class="section-num">05 —</div>
+    <h2>Third-Party Services</h2>
+    <p>The Extension does not communicate with any external servers, APIs, or third-party services. No data is sent anywhere outside your browser.</p>
+    <p>The alert sound is generated entirely using the browser's built-in Web Audio API — no audio files are loaded from external sources.</p>
+  </section>
+
+  <!-- 6. Children -->
+  <section>
+    <div class="section-num">06 —</div>
+    <h2>Children's Privacy</h2>
+    <p>Lock In Twin does not collect any personal data from anyone, including children under the age of 13. The Extension is fully compliant with COPPA as no data collection occurs.</p>
+  </section>
+
+  <!-- 7. Changes -->
+  <section>
+    <div class="section-num">07 —</div>
+    <h2>Changes to This Policy</h2>
+    <p>If this privacy policy is ever updated, the updated version will be published at this same URL and the "Last updated" date at the top will change. Continued use of the Extension after any changes constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <!-- 8. Contact -->
+  <section>
+    <div class="section-num">08 —</div>
+    <h2>Contact</h2>
+    <p>Questions about this policy or anything related to Lock In Twin? Reach out directly:</p>
+    <div class="contact-box">
+      <p>Colin Johnson-Gordon · Developer, Lock In Twin</p>
+      <a class="contact-email" href="mailto:colingordon9@gmail.com">colingordon9@gmail.com</a>
+    </div>
+  </section>
+
+  <footer>
+    <p><span>🔒</span> LOCK IN TWIN — Privacy Policy</p>
+    <p>© 2026 Colin Johnson-Gordon · All rights reserved</p>
+  </footer>
+
+</div>
+</body>
+</html>
