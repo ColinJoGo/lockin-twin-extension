@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lock In Twin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow:wght@400;500;600;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:280px; background:#080808; color:#fff; font-family:'Barlow',sans-serif; user-select:none; }
+
+  .top-bar { border-bottom:1px solid #111; padding:16px 20px 12px; display:flex; align-items:center; justify-content:space-between; }
+  .logo-row { display:flex; align-items:center; gap:8px; }
+  .logo-icon { font-size:18px; }
+  .logo-text { font-family:'Black Ops One',cursive; font-size:15px; color:#00ff88; letter-spacing:0.05em; }
+  .v-badge { font-size:9px; background:#00ff8820; color:#00ff8866; border:1px solid #00ff8825; border-radius:4px; padding:1px 5px; font-weight:700; }
+
+  /* Main toggle row */
+  .main-toggle { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid #0f0f0f; cursor:pointer; }
+  .main-toggle:hover { background:#0a0a0a; }
+  .mt-left { display:flex; flex-direction:column; gap:2px; }
+  .mt-label { font-size:14px; font-weight:700; color:#ccc; }
+  .mt-label.on { color:#fff; }
+  .mt-sub { font-size:10px; color:#333; text-transform:uppercase; letter-spacing:0.05em; }
+  .mt-sub.on { color:#00ff8866; }
+  .toggle-switch { width:40px; height:22px; background:#1a1a1a; border-radius:99px; position:relative; transition:background 0.25s; flex-shrink:0; }
+  .toggle-switch.on { background:#00ff88; }
+  .toggle-knob { position:absolute; top:3px; left:3px; width:16px; height:16px; background:#444; border-radius:50%; transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.25s; }
+  .toggle-switch.on .toggle-knob { transform:translateX(18px); background:#000; }
+
+  /* Settings */
+  .settings { padding:14px 20px; border-bottom:1px solid #0f0f0f; display:flex; flex-direction:column; gap:14px; }
+
+  .setting-group { display:flex; flex-direction:column; gap:6px; }
+  .setting-label { font-size:10px; text-transform:uppercase; letter-spacing:0.07em; color:#444; font-weight:700; }
+
+  /* Timer slider */
+  .timer-row { display:flex; align-items:center; gap:10px; }
+  .timer-val { font-family:'Black Ops One', cursive; font-size:16px; color:#00ff88; min-width:52px; }
+  input[type=range] {
+    flex:1; -webkit-appearance:none; height:3px; background:#1a1a1a; border-radius:99px; outline:none; cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:#00ff88; cursor:pointer; transition:transform 0.1s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.3); }
+
+  /* Alert type pills */
+  .alert-options { display:flex; gap:6px; flex-wrap:wrap; }
+  .alert-opt {
+    flex:1; min-width:70px; padding:8px 6px; background:#0f0f0f; border:1px solid #1a1a1a;
+    border-radius:6px; cursor:pointer; transition:all 0.15s; text-align:center;
+  }
+  .alert-opt:hover { border-color:#2a2a2a; }
+  .alert-opt.selected { background:#00ff8812; border-color:#00ff8840; }
+  .alert-opt-icon { font-size:16px; display:block; margin-bottom:3px; }
+  .alert-opt-name { font-size:10px; font-weight:700; color:#555; text-transform:uppercase; letter-spacing:0.04em; }
+  .alert-opt.selected .alert-opt-name { color:#00ff88; }
+
+  /* Buttons */
+  .btn-row { display:flex; gap:8px; padding:12px 20px 14px; }
+  .btn { flex:1; padding:10px 8px; border-radius:6px; font-family:'Barlow',sans-serif; font-size:12px; font-weight:700; cursor:pointer; text-transform:uppercase; letter-spacing:0.03em; transition:all 0.15s; border:none; }
+  .btn-test { background:transparent; border:1px solid #1e1e1e; color:#444; }
+  .btn-test:hover { border-color:#333; color:#888; }
+  .btn-save { background:#00ff88; color:#000; }
+  .btn-save:hover { background:#00ffaa; }
+  .btn-save:disabled { background:#1a1a1a; color:#333; cursor:default; }
+
+  .footer { padding:8px 20px 12px; font-size:10px; color:#1a1a1a; text-align:center; letter-spacing:0.04em; }
+  .saved-flash { color:#00ff88; opacity:0; transition:opacity 0.3s; font-size:10px; text-align:center; padding:0 20px 8px; }
+  .saved-flash.show { opacity:1; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo-row">
+    <span class="logo-icon">🔒</span>
+    <span class="logo-text">LOCK IN TWIN</span>
+    <span class="v-badge">v2</span>
+  </div>
+</div>
+
+<!-- Power toggle -->
+<div class="main-toggle" id="main-toggle">
+  <div class="mt-left">
+    <div class="mt-label" id="mt-label">Enable</div>
+    <div class="mt-sub" id="mt-sub">browser-wide idle enforcer</div>
+  </div>
+  <div class="toggle-switch" id="toggle-switch">
+    <div class="toggle-knob"></div>
+  </div>
+</div>
+
+<!-- Settings -->
+<div class="settings">
+
+  <!-- Timer -->
+  <div class="setting-group">
+    <div class="setting-label">idle timer</div>
+    <div class="timer-row">
+      <div class="timer-val" id="timer-display">2 min</div>
+      <input type="range" id="timer-slider" min="1" max="30" value="2" step="1">
+    </div>
+  </div>
+
+  <!-- Alert type -->
+  <div class="setting-group">
+    <div class="setting-label">alert style</div>
+    <div class="alert-options">
+      <div class="alert-opt selected" data-type="game">
+        <span class="alert-opt-icon">🎮</span>
+        <span class="alert-opt-name">Mini Game</span>
+      </div>
+      <div class="alert-opt" data-type="overlay">
+        <span class="alert-opt-icon">🚨</span>
+        <span class="alert-opt-name">Just Alert</span>
+      </div>
+      <div class="alert-opt" data-type="banner">
+        <span class="alert-opt-icon">📢</span>
+        <span class="alert-opt-name">Top Banner</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="saved-flash" id="saved-flash">✓ settings saved</div>
+
+<div class="btn-row">
+  <button class="btn btn-test" id="test-btn">⚡ test</button>
+  <button class="btn btn-save" id="save-btn">save settings</button>
+</div>
+
+<div class="footer">goes idle across all tabs — not just one</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
