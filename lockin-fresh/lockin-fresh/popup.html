@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lock In Twin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow:wght@400;600;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:280px; background:#080808; color:#fff; font-family:'Barlow',sans-serif; user-select:none; }
+
+  .topbar { display:flex; align-items:center; gap:8px; padding:15px 18px 12px; border-bottom:1px solid #111; }
+  .topbar-logo { font-family:'Black Ops One',cursive; font-size:15px; color:#00ff88; letter-spacing:0.05em; }
+  .topbar-v { font-size:9px; color:#00ff8866; background:#00ff8815; border:1px solid #00ff8825; border-radius:4px; padding:1px 5px; font-weight:700; }
+
+  .power-row { display:flex; align-items:center; justify-content:space-between; padding:13px 18px; border-bottom:1px solid #0f0f0f; cursor:pointer; }
+  .power-row:hover { background:#0b0b0b; }
+  .power-label { font-size:13px; font-weight:700; color:#aaa; }
+  .power-label.on { color:#fff; }
+  .sw { width:40px; height:22px; background:#222; border-radius:99px; position:relative; transition:background 0.2s; }
+  .sw.on { background:#00ff88; }
+  .sw-k { position:absolute; top:3px; left:3px; width:16px; height:16px; background:#555; border-radius:50%; transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),background 0.2s; }
+  .sw.on .sw-k { transform:translateX(18px); background:#000; }
+
+  .section { padding:13px 18px; border-bottom:1px solid #0f0f0f; }
+  .sec-label { font-size:10px; text-transform:uppercase; letter-spacing:0.07em; color:#333; font-weight:700; margin-bottom:8px; }
+
+  .timer-row { display:flex; align-items:center; gap:10px; }
+  .timer-val { font-family:'Black Ops One',cursive; font-size:17px; color:#00ff88; min-width:50px; }
+  input[type=range] { flex:1; -webkit-appearance:none; height:3px; background:#1d1d1d; border-radius:99px; outline:none; cursor:pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:#00ff88; cursor:pointer; }
+
+  .alert-opts { display:flex; gap:6px; }
+  .aopt { flex:1; padding:9px 4px; background:#0f0f0f; border:1px solid #1a1a1a; border-radius:7px; cursor:pointer; text-align:center; transition:all 0.15s; }
+  .aopt:hover { border-color:#2a2a2a; }
+  .aopt.sel { background:#00ff8810; border-color:#00ff8840; }
+  .aopt-icon { font-size:17px; display:block; margin-bottom:3px; }
+  .aopt-name { font-size:10px; font-weight:700; color:#444; text-transform:uppercase; letter-spacing:0.03em; }
+  .aopt.sel .aopt-name { color:#00ff88; }
+
+  .btns { display:flex; gap:8px; padding:12px 18px 14px; }
+  .btn { flex:1; padding:10px; border-radius:6px; font-family:'Barlow',sans-serif; font-size:12px; font-weight:700; cursor:pointer; text-transform:uppercase; letter-spacing:0.03em; border:none; transition:all 0.15s; }
+  .btn-test { background:transparent; border:1px solid #1e1e1e; color:#444; }
+  .btn-test:hover { border-color:#333; color:#888; }
+  .btn-save { background:#00ff88; color:#000; }
+  .btn-save:hover { background:#00ffaa; }
+
+  .flash { text-align:center; font-size:10px; color:#00ff88; padding:0 18px 10px; opacity:0; transition:opacity 0.3s; }
+  .flash.show { opacity:1; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>🔒</span>
+  <span class="topbar-logo">LOCK IN TWIN</span>
+  <span class="topbar-v">v3</span>
+</div>
+
+<div class="power-row" id="power-row">
+  <span class="power-label" id="power-label">Enable</span>
+  <div class="sw" id="sw"><div class="sw-k"></div></div>
+</div>
+
+<div class="section">
+  <div class="sec-label">idle timer</div>
+  <div class="timer-row">
+    <div class="timer-val" id="tval">2 min</div>
+    <input type="range" id="tslider" min="1" max="30" value="2">
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label">alert style</div>
+  <div class="alert-opts">
+    <div class="aopt sel" data-t="game"><span class="aopt-icon">🎮</span><span class="aopt-name">Game</span></div>
+    <div class="aopt" data-t="overlay"><span class="aopt-icon">🚨</span><span class="aopt-name">Alert</span></div>
+    <div class="aopt" data-t="banner"><span class="aopt-icon">📢</span><span class="aopt-name">Banner</span></div>
+  </div>
+</div>
+
+<div class="flash" id="flash">✓ saved</div>
+
+<div class="btns">
+  <button class="btn btn-test" id="test-btn">⚡ test</button>
+  <button class="btn btn-save" id="save-btn">save</button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
